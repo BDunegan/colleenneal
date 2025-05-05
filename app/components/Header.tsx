@@ -226,7 +226,7 @@ export default function Header() {
       </DesktopNav>
 
       <ContactInfo>
-        <p>Phone: 281-508-2566</p>
+        <p>281-508-2566</p>
       </ContactInfo>
 
       {/* Mobile Navigation Toggle (Hamburger) */}
@@ -241,7 +241,7 @@ export default function Header() {
         <Link href="/about-us" onClick={handleLinkClick}>About</Link>
         <Link href="/contact" onClick={handleLinkClick}>Contact</Link>
         <a href="tel:281-508-2566" onClick={handleLinkClick} style={{ marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
-          Call: 281-508-2566
+          281-508-2566
         </a>
       </MobileMenu>
     </HeaderContainer>

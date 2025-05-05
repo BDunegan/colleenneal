@@ -11,7 +11,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
 import dynamic from 'next/dynamic';
-import Link from 'next/link'; // Import Link
 
 // Shared Styles (consider abstracting)
 const PageContainer = styled.div`
@@ -191,7 +190,7 @@ const FeedbackMessage = styled.div<{ type: 'success' | 'error' }>`
 `;
 
 // Dynamically import LeafletMap - simplified loading
-const LeafletMap = dynamic(() => import('@/components/home/LeafletMap'), {
+const LeafletMap = dynamic(() => import('../../components/home/LeafletMap'), {
   ssr: false,
   loading: () => <p style={{ textAlign: 'center', paddingTop: '2rem' }}>Loading map...</p> // Simple text loading
 });
@@ -224,17 +223,23 @@ export default function ContactContent() {
         setStatus('submitting');
         setFeedback('');
 
-        // --- Placeholder for actual form submission logic --- 
-        console.log("Submitting form data:", formData);
-        await new Promise(resolve => setTimeout(resolve, 1500)); 
-        // --- End Placeholder ---
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-        const success = Math.random() > 0.2;
-        if (success) {
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
             setStatus('success');
             setFeedback('Thank you for your message! We will get back to you shortly.');
             setFormData({ name: '', phone: '', email: '', message: '' });
-        } else {
+        } catch (error) {
             setStatus('error');
             setFeedback('Sorry, there was an error sending your message. Please try again or contact us directly.');
         }

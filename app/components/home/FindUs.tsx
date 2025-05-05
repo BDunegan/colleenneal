@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 
 // Dynamically import the LeafletMap component, disable SSR
 // Loading state is handled within the dynamic import options
-const LeafletMap = dynamic(() => import('@/components/home/LeafletMap'), {
+const LeafletMap = dynamic(() => import('../../components/home/LeafletMap'), {
   ssr: false,
   loading: () => <MapPlaceholder>Loading map...</MapPlaceholder>
 });

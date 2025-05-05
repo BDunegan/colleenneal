@@ -11,13 +11,13 @@ import "./globals.css"; // Global CSS styles
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS globally
 
 // Core components
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import MainContainer from '@/components/MainContainer';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MainContainer from './components/MainContainer';
 
 // Providers
 import StyledComponentsRegistry from '@/lib/registry';
-import ThemeProviderWrapper from '@/components/ThemeProviderWrapper';
+import ThemeProviderWrapper from './components/ThemeProviderWrapper';
 
 // Font setup using next/font
 const geistSans = Geist({
