@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
 import dynamic from 'next/dynamic';
+import { submitContactForm } from '@/lib/data';
 
 // Shared Styles (consider abstracting)
 const PageContainer = styled.div`
@@ -224,21 +225,15 @@ export default function ContactContent() {
         setFeedback('');
 
         try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!response.ok) {
+            const result = await submitContactForm(formData);
+            
+            if (result.success) {
+                setStatus('success');
+                setFeedback(result.message);
+                setFormData({ name: '', phone: '', email: '', message: '' });
+            } else {
                 throw new Error('Failed to send message');
             }
-
-            setStatus('success');
-            setFeedback('Thank you for your message! We will get back to you shortly.');
-            setFormData({ name: '', phone: '', email: '', message: '' });
         } catch (error) {
             setStatus('error');
             setFeedback('Sorry, there was an error sending your message. Please try again or contact us directly.');

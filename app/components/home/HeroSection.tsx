@@ -1,97 +1,110 @@
 /**
  * Hero Section Component (Home Page)
  * 
- * Displays the main title, introductory quote, hero image, and a CTA button.
- * Uses a flex layout that adjusts for different screen sizes.
+ * Displays the main title, introductory quote, and a CTA button
+ * over a full-viewport background image.
  */
 'use client';
 
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 import { theme } from '@/lib/theme';
 import Link from 'next/link';
+import Quote from '../common/Quote';
 
 const HeroContainer = styled.section`
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  height: 100vh;
+  min-height: 600px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 3rem 1rem;
-  background-color: #f0f7ff; /* Light blue background */
+  overflow: hidden;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    text-align: left;
-    padding: 4rem 2rem;
-    gap: 2rem;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/hero.jpg') center/cover no-repeat;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+    z-index: 2;
   }
 `;
 
 const HeroContent = styled.div`
-  max-width: 600px;
-  margin-bottom: 2rem;
-
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-    flex: 1;
-  }
+  position: relative;
+  z-index: 3;
+  max-width: 800px;
+  padding: 2rem;
+  color: white;
 
   h1 {
-    font-size: 2.2rem;
-    color: ${theme.colors.primary};
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
     line-height: 1.2;
-  }
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
-  blockquote {
-    font-size: 1.1rem;
-    font-style: italic;
-    color: #555;
-    margin: 1.5rem 0;
-    border-left: 3px solid ${theme.colors.secondary};
-    padding-left: 1rem;
-  }
-
-  cite {
-    display: block;
-    text-align: right;
-    font-size: 0.9rem;
-    color: #777;
-    margin-top: 0.5rem;
+    @media (min-width: 768px) {
+      font-size: 3.5rem;
+    }
   }
 
   .cta-button {
     display: inline-block;
     background-color: ${theme.colors.secondary};
     color: white;
-    padding: 0.8rem 1.8rem;
-    border-radius: 5px;
+    padding: 1rem 2.2rem;
+    border-radius: 30px;
     text-decoration: none;
     font-weight: 600;
-    margin-top: 1.5rem;
-    transition: background-color 0.2s ease;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 
     &:hover {
-      background-color: #4cae4c; /* Darker green on hover */
+      background-color: #4cae4c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
       text-decoration: none;
     }
   }
 `;
 
-const HeroImageContainer = styled.div`
-  max-width: 500px;
-  width: 100%;
-
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
+const StyledQuote = styled(Quote)`
+  margin: 1.5rem 0;
+  text-align: center;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 
   @media (min-width: 768px) {
-    flex: 1;
+    font-size: 1.4rem;
   }
 `;
 
@@ -100,24 +113,11 @@ export default function HeroSection() {
     <HeroContainer>
       <HeroContent>
         <h1>Exceptional Counseling and Therapy Services</h1>
-        <blockquote>
-          "My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style."
-          <cite>– Maya Angelou</cite>
-        </blockquote>
-        {/* Optional: Add a small introductory sentence here if desired */}
+        <StyledQuote />
         <Link href="/contact" className="cta-button">
           Request an Appointment
         </Link>
       </HeroContent>
-      <HeroImageContainer>
-        <Image
-          src="/hero.jpg"
-          alt="Couple talking during a therapy session"
-          width={500}
-          height={350}
-          priority
-        />
-      </HeroImageContainer>
     </HeroContainer>
   );
 } 

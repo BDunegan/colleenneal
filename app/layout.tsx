@@ -19,6 +19,9 @@ import MainContainer from './components/MainContainer';
 import StyledComponentsRegistry from '@/lib/registry';
 import ThemeProviderWrapper from './components/ThemeProviderWrapper';
 
+// SEO Configuration
+import { defaultMetadata } from './metadata';
+
 // Font setup using next/font
 const geistSans = Geist({
   variable: "--font-geist-sans", // CSS variable for easy use in CSS/styled-components
@@ -29,11 +32,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Metadata for SEO
-export const metadata: Metadata = {
-  title: "Colleen Neal Therapy", // Site title
-  description: "Exceptional Counseling and Therapy Services in the Greater Clear Lake Area.", // Site description
-};
+// Export metadata for SEO
+export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
   children, // Represents the content of the specific page being rendered

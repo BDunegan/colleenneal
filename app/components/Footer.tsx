@@ -9,33 +9,34 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Import Image
+import Image from 'next/image';
 import styled from 'styled-components';
-import { theme } from '@/lib/theme'; // Import theme
+import { theme } from '@/lib/theme';
+import { SITE_CONSTANTS, PolicyLink, ImageProps } from '@/lib/constants';
 
 const FooterContainer = styled.footer`
-  background-color: #f8f8f8; /* Light grey background for footer */
-  color: #555; /* Slightly lighter text color */
-  padding: 2rem 1rem; /* Mobile padding */
+  background-color: #f8f8f8;
+  color: #555;
+  padding: 2rem 1rem;
   border-top: 1px solid #ddd;
   margin-top: 3rem;
   display: grid;
-  grid-template-columns: 1fr; /* Single column on mobile */
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   font-size: 0.9rem;
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); /* Two columns on tablet */
+    grid-template-columns: repeat(2, 1fr);
     padding: 2.5rem 2rem;
   }
 
   @media (min-width: 992px) {
-    grid-template-columns: repeat(4, 1fr); /* Four columns on desktop */
+    grid-template-columns: repeat(4, 1fr);
   }
 `;
 
 const FooterSection = styled.div`
-  h4 {
+  h2 {
     color: ${theme.colors.primary};
     font-size: 1rem;
     margin-bottom: 0.8rem;
@@ -47,7 +48,7 @@ const FooterSection = styled.div`
   }
 
   a {
-    color: #555; /* Match footer text color */
+    color: #555;
     &:hover {
       color: ${theme.colors.primary};
       text-decoration: underline;
@@ -66,76 +67,74 @@ const PolicyLinks = styled.div`
 `;
 
 const PaymentLogos = styled.div`
-  /* Styles for the payment logos container */
-  margin-bottom: 0.5rem; /* Reduced margin */
+  margin-bottom: 0.5rem;
   img {
-      max-width: 100%; /* Ensure image scales down */
-      height: auto; /* Maintain aspect ratio */
-      max-height: 40px; /* Limit height */
+    max-width: 100%;
+    height: auto;
+    max-height: ${SITE_CONSTANTS.IMAGES.PAYMENT_CARDS.HEIGHT}px;
   }
 `;
 
 const Copyright = styled.p`
-    margin-top: 1rem;
-    font-size: 0.8rem;
-    color: #777;
-    grid-column: 1 / -1; /* Span all columns */
-    text-align: center;
-    border-top: 1px solid #eee;
-    padding-top: 1rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #777;
+  grid-column: 1 / -1;
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
 `;
 
 export default function Footer() {
-  // Get current year dynamically for copyright
   const currentYear = new Date().getFullYear();
+
+  const paymentCardsImageProps: ImageProps = {
+    src: "/cards.png",
+    alt: "Accepted Payment Methods: Visa, Mastercard, American Express, Discover, PayPal",
+    width: SITE_CONSTANTS.IMAGES.PAYMENT_CARDS.WIDTH,
+    height: SITE_CONSTANTS.IMAGES.PAYMENT_CARDS.HEIGHT,
+    className: "payment-cards",
+  };
 
   return (
     <FooterContainer>
-      {/* Request Service Section */}
       <FooterSection>
-        {/* Using Link for internal navigation */}
-        <h4><Link href="/contact">Request Service</Link></h4>
-        <p>Serving the Greater Clear Lake Area</p>
-        <p>Phone: <a href="tel:281-508-2566">281-508-2566</a></p>
+        <h2><Link href="/contact">Request Service</Link></h2>
+        <p>Serving the {SITE_CONSTANTS.CONTACT.AREA}</p>
+        <p>Phone: <a href={`tel:${SITE_CONSTANTS.CONTACT.PHONE}`}>{SITE_CONSTANTS.CONTACT.PHONE}</a></p>
       </FooterSection>
 
-      {/* Contact Information Section */}
       <FooterSection>
-        <h4>Contact Information</h4>
-        <p>16864 Royal Crest Drive,<br/>Houston, TX 77058</p>
-        <p>Email: <a href="mailto:colleenneal.lpc@gmail.com">colleenneal.lpc@gmail.com</a></p>
-        <p>Phone: <a href="tel:281-508-2566">281-508-2566</a></p>
+        <h2>Contact Information</h2>
+        <p>{SITE_CONSTANTS.CONTACT.ADDRESS}</p>
+        <p>Email: <a href={`mailto:${SITE_CONSTANTS.CONTACT.EMAIL}`}>{SITE_CONSTANTS.CONTACT.EMAIL}</a></p>
+        <p>Phone: <a href={`tel:${SITE_CONSTANTS.CONTACT.PHONE}`}>{SITE_CONSTANTS.CONTACT.PHONE}</a></p>
       </FooterSection>
 
-      {/* Policies Section */}
       <FooterSection>
-        <h4>Policies</h4>
+        <h2>Policies</h2>
         <PolicyLinks>
-          {/* Assuming these pages exist or will be created */}
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/terms-of-use">Terms of Use</Link>
-          {/* Add other policy links here - using placeholder links */}
-          <Link href="/notice-of-privacy-practices">Notice of Privacy Practices</Link>
-          <Link href="/accessibility">Accessibility Policy</Link>
+          {SITE_CONSTANTS.POLICY_LINKS.map((policy: PolicyLink) => (
+            <Link key={policy.path} href={policy.path}>
+              {policy.label}
+            </Link>
+          ))}
         </PolicyLinks>
       </FooterSection>
 
-      {/* Payment Methods Section */}
       <FooterSection>
-        <h4>Payment Methods</h4>
+        <h2>Payment Methods</h2>
         <PaymentLogos>
-          <Image
-            src="/cards.png"
-            alt="Payment Methods Accepted: Visa, Mastercard, American Express, Discover, PayPal"
-            width={250}
-            height={40}
-          />
-          <p style={{fontSize: '0.8rem', fontStyle: 'italic', marginTop: '0.5rem'}}>Other payment options may be available.</p>
+          <Image {...paymentCardsImageProps} />
+          <p style={{fontSize: '0.8rem', fontStyle: 'italic', marginTop: '0.5rem'}}>
+            Other payment options may be available.
+          </p>
         </PaymentLogos>
       </FooterSection>
 
-      {/* Copyright Notice (Spans Full Width) */}
-       <Copyright>&copy; {currentYear} Colleen Neal Therapy. All Rights Reserved.</Copyright>
+      <Copyright>
+        &copy; {currentYear} Colleen Neal Therapy. All Rights Reserved.
+      </Copyright>
     </FooterContainer>
   );
 } 

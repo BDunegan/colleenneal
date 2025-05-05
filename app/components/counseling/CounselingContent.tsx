@@ -12,6 +12,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
+import PageWithQuote from '../common/PageWithQuote';
 
 // Shared styled components (can be moved to a shared file later if needed)
 const PageContainer = styled.div`
@@ -29,25 +30,6 @@ const PageTitle = styled.h1`
   color: ${theme.colors.primary};
   margin-bottom: 1.5rem;
   text-align: center;
-`;
-
-const Quote = styled.blockquote`
-  font-size: 1.2rem;
-  font-style: italic;
-  color: #555;
-  margin: 0 auto 2.5rem auto;
-  border-left: 3px solid ${theme.colors.secondary};
-  padding-left: 1.5rem;
-  max-width: 700px;
-  text-align: center;
-
-  cite {
-    display: block;
-    text-align: right;
-    font-size: 1rem;
-    color: #777;
-    margin-top: 0.8rem;
-  }
 `;
 
 const Section = styled.section`
@@ -206,13 +188,7 @@ export default function CounselingContent() {
   };
 
   return (
-    <PageContainer>
-      <PageTitle>Effective Counseling Solutions</PageTitle>
-      <Quote>
-        "The greatest discovery of all time is that a person can change his future by merely changing his attitude."
-        <cite>– Norman Vincent Peale</cite>
-      </Quote>
-
+    <PageWithQuote title="Effective Counseling Solutions">
       <Section>
         <SectionTitle>Introduction</SectionTitle>
         <IntroText>
@@ -259,6 +235,6 @@ export default function CounselingContent() {
         </Callout>
       </Section>
 
-    </PageContainer>
+    </PageWithQuote>
   );
 } 

@@ -13,6 +13,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { theme } from '@/lib/theme';
+import PageWithQuote from '../common/PageWithQuote';
 
 // Reusable styled components from Counseling page (consider abstracting later)
 const PageContainer = styled.div`
@@ -30,25 +31,6 @@ const PageTitle = styled.h1`
   color: ${theme.colors.primary};
   margin-bottom: 1.5rem;
   text-align: center;
-`;
-
-const Quote = styled.blockquote`
-  font-size: 1.2rem;
-  font-style: italic;
-  color: #555;
-  margin: 0 auto 2.5rem auto;
-  border-left: 3px solid ${theme.colors.secondary};
-  padding-left: 1.5rem;
-  max-width: 700px;
-  text-align: center;
-
-  cite {
-    display: block;
-    text-align: right;
-    font-size: 1rem;
-    color: #777;
-    margin-top: 0.8rem;
-  }
 `;
 
 const Section = styled.section`
@@ -105,15 +87,9 @@ const CTAButton = styled(Link)`
 
 export default function AboutContent() {
   return (
-    <PageContainer>
-      <PageTitle>Learn More About Colleen Neal, LPC</PageTitle>
-      <Quote>
-        "What lies behind us and what lies before us are tiny matters compared to what lies within us."
-        <cite>– Ralph Waldo Emerson</cite>
-      </Quote>
-
+    <PageWithQuote title="Learn More About Colleen Neal, LPC">
       <Section>
-        <SectionTitle>Education & Experience</SectionTitle>
+        <SectionTitle>Education and Experience</SectionTitle>
         <ContentText>
           <p>
             Colleen Neal brings a wealth of knowledge and experience to her counseling practice. Her dedication to helping others is rooted in a strong educational foundation and years of practical application in diverse settings.
@@ -139,7 +115,14 @@ export default function AboutContent() {
       </Section>
 
       <Section>
-        <SectionTitle>Personal Note</SectionTitle>
+        <SectionTitle>Credentials and Memberships</SectionTitle>
+        <ContentText>
+          {/* ... existing content ... */}
+        </ContentText>
+      </Section>
+
+      <Section>
+        <SectionTitle>A Personal Note</SectionTitle>
         <ContentText>
           <p>
             Beyond her professional qualifications, Colleen is relatable and understands the complexities of life. She is married and has two daughters, bringing a grounded, real-world perspective to her therapeutic relationships.
@@ -147,19 +130,15 @@ export default function AboutContent() {
         </ContentText>
       </Section>
 
-      {/* Call to Action Section */}
       <Section style={{ textAlign: 'center' }}>
         <SectionTitle>Ready to Connect?</SectionTitle>
         <ContentText>
           <p>Learn how Colleen can support you on your journey to well-being.</p>
         </ContentText>
-        {/* Primary CTA */}
         <CTAButton href="/counseling">Explore Our Services</CTAButton>
         <span style={{ margin: '0 1rem' }}>or</span>
-        {/* Secondary CTA - styled slightly differently */}
         <CTAButton href="/contact" style={{ backgroundColor: theme.colors.primary }}>Contact Us</CTAButton>
       </Section>
-
-    </PageContainer>
+    </PageWithQuote>
   );
 } 

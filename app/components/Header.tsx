@@ -6,83 +6,52 @@
  */
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Import Image component
+import Image from 'next/image';
 import styled from 'styled-components';
-import { theme } from '@/lib/theme'; // Import theme
+import { theme } from '@/lib/theme';
+import { SITE_CONSTANTS, NavItem, ImageProps } from '@/lib/constants';
 
 const HeaderContainer = styled.header`
   background-color: ${theme.colors.background};
-  padding: 0.8rem 1rem; /* Adjusted padding for mobile */
+  padding: 0.8rem 1rem;
   border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* Needed for absolute positioning of mobile menu */
+  position: relative;
+  width: 100%;
 
-  @media (min-width: 768px) { /* Tablet and up */
+  @media (min-width: 768px) {
     padding: 1rem 2rem;
   }
 `;
 
 const LogoContainer = styled.div`
-  display: flex; // Align image and text if needed
+  display: flex;
   align-items: center;
-  gap: 0.5rem; // Space between logo and text
 
   a {
     text-decoration: none;
-    display: flex; // Make link wrap image and text together
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
   }
 
   .logo-image {
-    height: 40px; // Adjust height as needed
-    width: auto; // Maintain aspect ratio
-  }
-
-  .logo-text-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  h2 {
-    font-size: 1.1rem; /* Adjust size */
-    margin: 0;
-    color: ${theme.colors.primary};
-    line-height: 1.2;
-  }
-  p {
-    font-size: 0.75rem; /* Adjust size */
-    color: #666;
-    margin: 0;
+    height: ${SITE_CONSTANTS.IMAGES.LOGO.MOBILE_HEIGHT}px;
+    width: auto;
   }
 
   @media (min-width: 768px) {
     .logo-image {
-      height: 50px; // Slightly larger on desktop
-    }
-    h2 {
-      font-size: 1.3rem;
-    }
-    p {
-      font-size: 0.85rem;
-    }
-  }
-    @media (min-width: 992px) {
-    h2 {
-      font-size: 1.6rem;
-    }
-    p {
-      font-size: 0.9rem;
+      height: ${SITE_CONSTANTS.IMAGES.LOGO.HEIGHT}px;
     }
   }
 `;
 
 const DesktopNav = styled.nav`
-  display: none; /* Hidden on mobile */
+  display: none;
   gap: 1.5rem;
   align-items: center;
 
@@ -103,7 +72,6 @@ const DesktopNav = styled.nav`
       right: 0;
       background: ${theme.colors.primary};
       transition: width 0.2s ease;
-      -webkit-transition: width 0.2s ease;
     }
 
     &:hover:after {
@@ -118,13 +86,13 @@ const DesktopNav = styled.nav`
     }
   }
 
-  @media (min-width: 768px) { /* Visible on tablet and up */
+  @media (min-width: 768px) {
     display: flex;
   }
 `;
 
 const MobileNavToggle = styled.button`
-  display: block; /* Visible on mobile */
+  display: block;
   background: none;
   border: none;
   font-size: 1.8rem;
@@ -132,7 +100,7 @@ const MobileNavToggle = styled.button`
   padding: 0.5rem;
   color: ${theme.colors.primary};
 
-  @media (min-width: 768px) { /* Hidden on tablet and up */
+  @media (min-width: 768px) {
     display: none;
   }
 `;
@@ -141,7 +109,7 @@ const MobileMenu = styled.nav<{ $isOpen: boolean }>`
   display: ${props => props.$isOpen ? 'flex' : 'none'};
   flex-direction: column;
   position: absolute;
-  top: 100%; /* Position below header */
+  top: 100%;
   left: 0;
   right: 0;
   background-color: ${theme.colors.background};
@@ -165,13 +133,13 @@ const MobileMenu = styled.nav<{ $isOpen: boolean }>`
     }
   }
 
-  @media (min-width: 768px) { /* Hidden on tablet and up */
+  @media (min-width: 768px) {
     display: none;
   }
 `;
 
 const ContactInfo = styled.div`
-  display: none; /* Optionally hide on smallest screens if too cluttered */
+  display: none;
   text-align: right;
   font-size: 0.9rem;
   color: #555;
@@ -180,70 +148,86 @@ const ContactInfo = styled.div`
     margin: 0;
   }
 
-  @media (min-width: 992px) { /* Show on larger screens */
+  @media (min-width: 992px) {
     display: block;
+  }
+`;
+
+const MobileMenuWrapper = styled.div`
+  @media (min-width: 768px) {
+    display: none;
   }
 `;
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Close menu when a link is clicked
   const handleLinkClick = () => {
-      setIsMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
+  };
+
+  const logoImageProps: ImageProps = {
+    src: "/logo.png",
+    alt: "Colleen Neal, LPC - Professional Counseling Services in Clear Lake Area",
+    width: SITE_CONSTANTS.IMAGES.LOGO.WIDTH,
+    height: SITE_CONSTANTS.IMAGES.LOGO.HEIGHT,
+    priority: true,
+    className: "logo-image",
   };
 
   return (
     <HeaderContainer>
       <LogoContainer>
         <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Colleen Neal, LPC Logo"
-            width={150}
-            height={50}
-            className="logo-image"
-            priority
-          />
-          {/* Optional: Keep text next to logo if desired, otherwise remove below */}
-          {/* <div className="logo-text-container">
-            <h2>Colleen Neal, LPC</h2>
-            <p>Serving the Greater Clear Lake Area</p>
-          </div> */}
+          <Image {...logoImageProps} />
         </Link>
       </LogoContainer>
 
-      {/* Desktop Navigation */}
       <DesktopNav>
-        <Link href="/">Home</Link>
-        <Link href="/counseling">Our Services</Link>
-        <Link href="/about-us">About</Link>
-        <Link href="/contact">Contact</Link>
+        {SITE_CONSTANTS.NAV_ITEMS.map((item: NavItem) => (
+          <Link key={item.path} href={item.path}>
+            {item.label}
+          </Link>
+        ))}
       </DesktopNav>
 
       <ContactInfo>
-        <p>281-508-2566</p>
+        <p>{SITE_CONSTANTS.CONTACT.PHONE}</p>
       </ContactInfo>
 
-      {/* Mobile Navigation Toggle (Hamburger) */}
-      <MobileNavToggle onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? '\u2715' : '\u2630'} {/* Close (X) or Hamburger icon */}
-      </MobileNavToggle>
+      <MobileMenuWrapper>
+        {isMounted && (
+          <>
+            <MobileNavToggle onClick={toggleMobileMenu} aria-label="Toggle navigation menu">
+              {isMobileMenuOpen ? '\u2715' : '\u2630'}
+            </MobileNavToggle>
 
-      {/* Mobile Menu */}
-      <MobileMenu $isOpen={isMobileMenuOpen}>
-        <Link href="/" onClick={handleLinkClick}>Home</Link>
-        <Link href="/counseling" onClick={handleLinkClick}>Our Services</Link>
-        <Link href="/about-us" onClick={handleLinkClick}>About</Link>
-        <Link href="/contact" onClick={handleLinkClick}>Contact</Link>
-        <a href="tel:281-508-2566" onClick={handleLinkClick} style={{ marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
-          281-508-2566
-        </a>
-      </MobileMenu>
+            <MobileMenu $isOpen={isMobileMenuOpen}>
+              {SITE_CONSTANTS.NAV_ITEMS.map((item: NavItem) => (
+                <Link key={item.path} href={item.path} onClick={handleLinkClick}>
+                  {item.label}
+                </Link>
+              ))}
+              <a 
+                href={`tel:${SITE_CONSTANTS.CONTACT.PHONE}`} 
+                onClick={handleLinkClick} 
+                style={{ marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}
+              >
+                {SITE_CONSTANTS.CONTACT.PHONE}
+              </a>
+            </MobileMenu>
+          </>
+        )}
+      </MobileMenuWrapper>
     </HeaderContainer>
   );
 } 
