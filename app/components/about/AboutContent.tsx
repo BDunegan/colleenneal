@@ -115,9 +115,11 @@ export default function AboutContent() {
       </Section>
 
       <Section>
-        <SectionTitle>Credentials and Memberships</SectionTitle>
+        <SectionTitle>LPC Mentorships</SectionTitle>
         <ContentText>
-          {/* ... existing content ... */}
+          <p>
+            Approved mentor for new counselors.
+          </p>
         </ContentText>
       </Section>
 

@@ -51,7 +51,7 @@ export default function AboutUsPreview() {
     <AboutPreviewContainer>
       <SectionTitle>Meet Colleen Neal, LPC</SectionTitle>
       <PreviewText>
-        With over 10 years of experience, Colleen offers compassionate and effective counseling tailored to your unique journey.
+        With over 15 years of experience, Colleen offers compassionate and effective counseling tailored to your unique journey.
         Learn more about her background, approach, and commitment to supporting your mental health.
       </PreviewText>
       <AboutLink href="/about-us">Learn More About Colleen</AboutLink>

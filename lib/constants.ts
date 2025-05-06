@@ -4,7 +4,7 @@ export const SITE_CONSTANTS = {
     PHONE: "281-508-2566",
     EMAIL: "colleenneal.lpc@gmail.com",
     ADDRESS: "16864 Royal Crest Drive, Houston, TX 77058",
-    AREA: "Greater Clear Lake Area",
+    AREA: "Greater Clear Lake, Friendswood and League City areas",
   },
   
   // Social Media

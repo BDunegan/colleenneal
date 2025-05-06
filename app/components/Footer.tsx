@@ -112,14 +112,7 @@ export default function Footer() {
       </FooterSection>
 
       <FooterSection>
-        <h2>Policies</h2>
-        <PolicyLinks>
-          {SITE_CONSTANTS.POLICY_LINKS.map((policy: PolicyLink) => (
-            <Link key={policy.path} href={policy.path}>
-              {policy.label}
-            </Link>
-          ))}
-        </PolicyLinks>
+        <strong>Data Collection:</strong> We only collect the personal information you voluntarily provide when you send us an email via the contact form. That information is used solely to respond to your inquiry and is never sold or shared with third parties.<br/>
       </FooterSection>
 
       <FooterSection>

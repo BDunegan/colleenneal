@@ -91,7 +91,7 @@ const MapContainer = styled.div`
   width: 100%;
   background-color: #e9e9e9;
   margin-top: 1.5rem;
-  position: relative; // Needed for potential overlays or loading indicators
+  position: relative;
 `;
 
 const MapPlaceholder = styled(MapContainer)`
@@ -116,7 +116,6 @@ const FormsList = styled.ul`
     text-decoration: none;
     font-weight: 500;
     &:hover { text-decoration: underline; }
-    /* Add PDF icon later if desired */
   }
 `;
 
@@ -193,26 +192,19 @@ const FeedbackMessage = styled.div<{ type: 'success' | 'error' }>`
 // Dynamically import LeafletMap - simplified loading
 const LeafletMap = dynamic(() => import('../../components/home/LeafletMap'), {
   ssr: false,
-  loading: () => <p style={{ textAlign: 'center', paddingTop: '2rem' }}>Loading map...</p> // Simple text loading
+  loading: () => <MapPlaceholder>Loading map...</MapPlaceholder>
 });
-
-// Updated forms array
-const forms = [
-    { name: "Authorization Consenting to Release of Information", url: "https://cdn.websites.hibu.com/9cbbe6282a474b6a85980c948ff8c941/files/uploaded/Auth%20of%20ROI.pdf" },
-    { name: "Declaration of Agreement", url: "https://cdn.websites.hibu.com/9cbbe6282a474b6a85980c948ff8c941/files/uploaded/Declaration%20of%20Agreement.pdf" },
-    { name: "HIPAA Notice of Privacy Practices", url: "https://cdn.websites.hibu.com/9cbbe6282a474b6a85980c948ff8c941/files/uploaded/HIPAA%20Notice.pdf" },
-    { name: "Informed Consent & Statement of Understanding", url: "https://cdn.websites.hibu.com/9cbbe6282a474b6a85980c948ff8c941/files/uploaded/Informed%20Consent%20%20&%20Understanding%20pdf.pdf" },
-];
 
 export default function ContactContent() {
     const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [feedback, setFeedback] = useState('');
 
-    const address = "16864 Royal Crest Drive, Houston, TX 77058";
+    // Updated to match FindUs.tsx
+    const address = "16864 Royal Crest Dr, Houston, TX 77058";
     const encodedAddress = encodeURIComponent(address);
     const googleMapsDirectionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
-    const position: L.LatLngExpression = [29.5714, -95.1176];
+    const position: L.LatLngExpression = [29.558098, -95.115155]; // Geocoded coords for this address
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -234,85 +226,74 @@ export default function ContactContent() {
             } else {
                 throw new Error('Failed to send message');
             }
-        } catch (error) {
+        } catch {
             setStatus('error');
             setFeedback('Sorry, there was an error sending your message. Please try again or contact us directly.');
         }
     };
 
-  return (
-    <PageContainer>
-      <PageTitle>Contact Us for Exceptional Counseling Services</PageTitle>
+    return (
+      <PageContainer>
+        <PageTitle>Contact Us for Exceptional Counseling Services</PageTitle>
 
-      <ContactLayout>
-        <InfoColumn>
-          <Section>
-            <SectionTitle>Contact Details</SectionTitle>
-            <ContactDetailsList>
-              <p><strong>Colleen Neal, MS, LPC, NCC</strong></p>
-              <p><strong>Address:</strong> {address}</p>
-              <p><strong>Email:</strong> <a href="mailto:colleenneal.lpc@gmail.com">colleenneal.lpc@gmail.com</a></p>
-              <p><strong>Phone:</strong> <a href="tel:281-508-2566">281-508-2566</a></p>
-              <p className="appointment-note">* By appointment only</p>
-            </ContactDetailsList>
-          </Section>
+        <ContactLayout>
+          <InfoColumn>
+            <Section>
+              <SectionTitle>Contact Details</SectionTitle>
+              <ContactDetailsList>
+                <p><strong>Colleen Neal, MS, LPC, NCC</strong></p>
+                <p><strong>Address:</strong> {address}</p>
+                <p><strong>Email:</strong> <a href="mailto:colleenneal.lpc@gmail.com">colleenneal.lpc@gmail.com</a></p>
+                <p><strong>Phone:</strong> <a href="tel:281-508-2566">281-508-2566</a></p>
+                <p className="appointment-note">* By appointment only</p>
+              </ContactDetailsList>
+            </Section>
 
-          <Section>
-            <SectionTitle>Get Directions</SectionTitle>
-            <MapContainer>
+            <Section>
+              <SectionTitle>Get Directions</SectionTitle>
+              <MapContainer>
                 <LeafletMap position={position} address={address} />
-            </MapContainer>
-            <a 
+              </MapContainer>
+              <a 
                 href={googleMapsDirectionsUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 style={{display: 'inline-block', marginTop: '1rem'}}
-            >
+              >
                 View on Google Maps
-            </a>
-          </Section>
-
-          <Section>
-            <SectionTitle>Downloadable Forms</SectionTitle>
-            <FormsList>
-                {forms.map(form => (
-                    <li key={form.name}>
-                        <a href={form.url} target="_blank" rel="noopener noreferrer">{form.name} (PDF)</a>
-                    </li>
-                ))}
-            </FormsList>
-          </Section>
-        </InfoColumn>
-
-        <FormColumn>
-            <Section>
-                <SectionTitle>Send a Message</SectionTitle>
-                <ContactForm onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Name:</label>
-                        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
-                    </div>
-                    <div>
-                        <label htmlFor="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} />
-                    </div>
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-                    </div>
-                    <div>
-                        <label htmlFor="message">Message:</label>
-                        <textarea id="message" name="message" value={formData.message} onChange={handleChange} required></textarea>
-                    </div>
-                    <button type="submit" disabled={status === 'submitting'}>
-                        {status === 'submitting' ? 'Sending...' : 'Send Message'}
-                    </button>
-                    {status === 'success' && <FeedbackMessage type="success">{feedback}</FeedbackMessage>}
-                    {status === 'error' && <FeedbackMessage type="error">{feedback}</FeedbackMessage>}
-                </ContactForm>
+              </a>
             </Section>
-        </FormColumn>
-      </ContactLayout>
-    </PageContainer>
-  );
-} 
+          </InfoColumn>
+
+          <FormColumn>
+            <Section>
+              <SectionTitle>Send a Message</SectionTitle>
+              <ContactForm onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label htmlFor="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} />
+                </div>
+                <div>
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
+                <div>
+                    <label htmlFor="message">Message:</label>
+                    <textarea id="message" name="message" value={formData.message} onChange={handleChange} required></textarea>
+                </div>
+                <button type="submit" disabled={status === 'submitting'}>
+                    {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                </button>
+                {status === 'success' && <FeedbackMessage type="success">{feedback}</FeedbackMessage>}
+                {status === 'error' && <FeedbackMessage type="error">{feedback}</FeedbackMessage>}
+              </ContactForm>
+            </Section>
+          </FormColumn>
+        </ContactLayout>
+      </PageContainer>
+    );
+}

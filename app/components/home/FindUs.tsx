@@ -35,10 +35,10 @@ const FindUsContainer = styled.section`
 const MapContainer = styled.div`
   border-radius: 8px;
   overflow: hidden;
-  min-height: 350px; // Fixed height for the map area
+  min-height: 350px;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: #e9e9e9; // Background for loading state
+  background-color: #e9e9e9;
 `;
 
 // Placeholder style used during map loading
@@ -75,16 +75,16 @@ const LocationDetails = styled.div`
     transition: background-color 0.2s ease;
 
     &:hover {
-        background-color: #4cae4c;
-        text-decoration: none;
+      background-color: #4cae4c;
+      text-decoration: none;
     }
   }
 `;
 
 export default function FindUs() {
-  // Static address and coordinates for the map marker
-  const address = "16864 Royal Crest Drive, Houston, TX 77058";
-  const position: L.LatLngExpression = [29.5714, -95.1176]; // Approximate coordinates
+  // Updated static address and coordinates for the map marker
+  const address = "16864 Royal Crest Dr, Houston, TX 77058";
+  const position: L.LatLngExpression = [29.558098, -95.115155]; // Geocoded coords for this address :contentReference[oaicite:1]{index=1}
 
   // Generate Google Maps search URL
   const encodedAddress = encodeURIComponent(address);
@@ -103,10 +103,15 @@ export default function FindUs() {
           <strong>{address}</strong>
         </p>
         {/* Link to Google Maps for external directions */}
-        <a href={googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" className="directions-link">
+        <a
+          href={googleMapsDirectionsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="directions-link"
+        >
           Get Directions
         </a>
       </LocationDetails>
     </FindUsContainer>
   );
-} 
+}

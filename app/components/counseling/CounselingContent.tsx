@@ -172,7 +172,8 @@ const preferences = [
   { name: "Psychoanalytic", description: "Explores unconscious thoughts and past experiences to understand current behaviors." },
   { name: "Psychodynamic", description: "Similar to psychoanalytic but often shorter-term, focusing on self-awareness of unconscious patterns." },
   { name: "Reality therapy", description: "Focuses on present choices and taking responsibility for one's actions to meet basic needs." },
-  { name: "SFBT", description: "Solution-Focused Brief Therapy concentrates on identifying solutions and strengths rather than problems." }
+  { name: "SFBT", description: "Solution-Focused Brief Therapy concentrates on identifying solutions and strengths rather than problems." },
+  { name: "EMDR", description: "Eye Movement Desensitization and Reprocessing that encourages the patient to focus briefly on the trauma memory while simultaneously experiencing bilateral stimulation" },
 ];
 
 export default function CounselingContent() {
@@ -192,7 +193,7 @@ export default function CounselingContent() {
       <Section>
         <SectionTitle>Introduction</SectionTitle>
         <IntroText>
-          With over 10 years of dedicated experience, Colleen Neal provides compassionate and effective counseling services. 
+          With over 15 years of dedicated experience, Colleen Neal provides compassionate and effective counseling services. 
           Whether you're navigating life transitions, managing stress, improving relationships, or seeking support for mental health challenges, 
           Colleen offers a safe and confidential space to explore your concerns and develop practical coping strategies. 
           Her approach is tailored to each individual, drawing from various therapeutic techniques to best meet your needs.
