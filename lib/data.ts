@@ -38,6 +38,57 @@ export const TREATMENT_PREFERENCES = [
   { name: "SFBT", description: "Solution-Focused Brief Therapy concentrates on identifying solutions and strengths rather than problems." }
 ] as const;
 
+export const INSURANCE_PROVIDERS = [
+  {
+    id: '1',
+    name: 'Aetna',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '2',
+    name: 'Blue Cross Blue Shield',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '3',
+    name: 'Cigna',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '4',
+    name: 'UnitedHealthcare',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '5',
+    name: 'Medicare',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '6',
+    name: 'Medicaid',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '7',
+    name: 'Tricare',
+    accepted: true,
+    notes: 'In-network provider'
+  },
+  {
+    id: '8',
+    name: 'Kaiser Permanente',
+    accepted: false,
+    notes: 'Out-of-network provider'
+  }
+];
+
 // Types for the static data
 export type Specialization = typeof SPECIALIZATIONS[number];
 export type TreatmentPreference = typeof TREATMENT_PREFERENCES[number];
@@ -47,6 +98,11 @@ export type TreatmentPreference = typeof TREATMENT_PREFERENCES[number];
 // --------------------------
 // Client‑side helper to POST form data to our API route
 // --------------------------
+import { init, send } from '@emailjs/browser';
+
+// Initialize EmailJS with your public key
+init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
+
 export interface ContactFormData {
   name: string;
   email: string;
@@ -60,7 +116,7 @@ export interface SubmitResult {
 }
 
 /**
- * Send contact form data to the server endpoint.
+ * Send contact form data using EmailJS.
  * @param formData — The form values from ContactContent component
  * @returns A JSON object indicating success or failure
  */
@@ -68,17 +124,27 @@ export async function submitContactForm(
   formData: ContactFormData
 ): Promise<SubmitResult> {
   try {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
+    const response = await send(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      }
+    );
 
-    const result: SubmitResult = await response.json();
-    return result;
+    return { 
+      success: true, 
+      message: 'Your message has been sent successfully.' 
+    };
   } catch (error) {
     console.error('Error submitting contact form:', error);
-    return { success: false, message: 'Network error. Please try again.' };
+    return { 
+      success: false, 
+      message: 'Failed to send message. Please try again later.' 
+    };
   }
 }
 

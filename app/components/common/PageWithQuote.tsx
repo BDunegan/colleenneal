@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
@@ -29,7 +31,7 @@ export default function PageWithQuote({ title, children }: PageWithQuoteProps) {
   return (
     <PageContainer>
       <PageTitle>{title}</PageTitle>
-      <Quote />
+      <Quote text="Change your thoughts and you change your world" author="Norman Vincent Peale" />
       {children}
     </PageContainer>
   );

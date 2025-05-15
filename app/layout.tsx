@@ -5,7 +5,7 @@
  * sets up styled-components registry and theme provider, and renders
  * the Header, Footer, and page content (children).
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css"; // Global CSS styles
 import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS globally
@@ -20,7 +20,7 @@ import StyledComponentsRegistry from '@/lib/registry';
 import ThemeProviderWrapper from './components/ThemeProviderWrapper';
 
 // SEO Configuration
-import { defaultMetadata } from './metadata';
+import { defaultMetadata, viewport } from './metadata';
 
 // Font setup using next/font
 const geistSans = Geist({
@@ -34,6 +34,7 @@ const geistMono = Geist_Mono({
 
 // Export metadata for SEO
 export const metadata: Metadata = defaultMetadata;
+export const viewportConfig: Viewport = viewport;
 
 export default function RootLayout({
   children, // Represents the content of the specific page being rendered

@@ -2,15 +2,35 @@
  * Leaflet Map Component
  * 
  * Renders an interactive map using React-Leaflet.
- * Requires Leaflet's CSS to be imported globally or within this component.
- * Includes a fix for the default marker icon path issue with webpack/Next.js.
+ * Implements dynamic loading for better performance.
  */
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css'; // Ensure Leaflet CSS is loaded
 import L from 'leaflet';
+
+const MapWrapper = styled.div`
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+// Dynamically import the map components
+const Map = dynamic(
+  () => import('./MapContent'),
+  {
+    loading: () => <div>Loading map...</div>,
+    ssr: false
+  }
+);
 
 // Fix for default marker icon issue with webpack/Next.js:
 // Manually set the paths for the default marker images.
@@ -31,20 +51,22 @@ interface LeafletMapProps {
 const LeafletMap: React.FC<LeafletMapProps> = ({ position, address }) => {
     return (
         // MapContainer sets up the map instance
-        <MapContainer center={position} zoom={15} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-            {/* TileLayer provides the base map imagery (OpenStreetMap in this case) */}
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {/* Marker places a pin at the specified position */}
-            <Marker position={position}>
-                {/* Popup displays information when the marker is clicked */}
-                <Popup>
-                    {address}
-                </Popup>
-            </Marker>
-        </MapContainer>
+        <MapWrapper>
+            <MapContainer center={position} zoom={15} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+                {/* TileLayer provides the base map imagery (OpenStreetMap in this case) */}
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {/* Marker places a pin at the specified position */}
+                <Marker position={position}>
+                    {/* Popup displays information when the marker is clicked */}
+                    <Popup>
+                        {address}
+                    </Popup>
+                </Marker>
+            </MapContainer>
+        </MapWrapper>
     );
 };
 

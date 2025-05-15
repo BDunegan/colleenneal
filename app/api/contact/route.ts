@@ -1,39 +1,27 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { init, send } from '@emailjs/browser';
 
-// Configure transporter via environment variables
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// Initialize EmailJS with your public key
+init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!);
 
 export async function POST(request: Request) {
   try {
-    const { name, email, phone, message } = await request.json();
-
-    // Hard‑coded recipient address
-    const mailOptions = {
-      from: `"${name}" <${email}>`,
-      to: 'colleenneal.lpc@gmail.com',
-      subject: `New contact form submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
-    };
-
-    await transporter.sendMail(mailOptions);
-    return NextResponse.json(
-      { success: true, message: 'Your message has been sent successfully.' },
-      { status: 200 }
+    const body = await request.json();
+    
+    const response = await send(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+      {
+        from_name: body.name,
+        from_email: body.email,
+        phone: body.phone,
+        message: body.message,
+      }
     );
+
+    return NextResponse.json({ success: true, message: 'Message sent successfully' }, { status: 201 });
   } catch (error) {
-    console.error('Failed to send email:', error);
-    return NextResponse.json(
-      { success: false, message: 'Failed to send message. Please try again later.' },
-      { status: 500 }
-    );
+    console.error('Error sending message:', error);
+    return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });
   }
-}
+} 

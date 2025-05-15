@@ -94,6 +94,9 @@ export default function Footer() {
     width: SITE_CONSTANTS.IMAGES.PAYMENT_CARDS.WIDTH,
     height: SITE_CONSTANTS.IMAGES.PAYMENT_CARDS.HEIGHT,
     className: "payment-cards",
+    quality: 90,
+    priority: false,
+    sizes: "(max-width: 768px) 100vw, 50vw"
   };
 
   return (

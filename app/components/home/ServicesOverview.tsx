@@ -63,6 +63,13 @@ const ServiceCard = styled.div`
   }
 `;
 
+const imageStyle = {
+  width: '100%',
+  height: 'auto',
+  borderRadius: '5px',
+  marginBottom: '1rem'
+};
+
 export default function ServicesOverview() {
   return (
     <OverviewContainer>
@@ -71,9 +78,13 @@ export default function ServicesOverview() {
         <ServiceCard>
           <Image 
             src="/counseling.jpg"
-            alt="Counseling Session" 
-            width={300} height={200} 
-            style={{ width: '100%', height: 'auto', borderRadius: '5px', marginBottom: '1rem' }} 
+            alt="Professional counseling session in a comfortable office setting" 
+            width={600}
+            height={400}
+            quality={75}
+            loading="lazy"
+            style={imageStyle}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <h3>Counseling Services</h3>
           <p>Personalized therapy sessions to help you navigate life's challenges and achieve emotional well-being.</p>
@@ -82,9 +93,13 @@ export default function ServicesOverview() {
         <ServiceCard>
           <Image 
             src="/treatment.jpg"
-            alt="Therapy preferences discussion" 
-            width={300} height={200} 
-            style={{ width: '100%', height: 'auto', borderRadius: '5px', marginBottom: '1rem' }}
+            alt="Therapist discussing treatment options with client" 
+            width={600}
+            height={400}
+            quality={75}
+            loading="lazy"
+            style={imageStyle}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <h3>Treatment Preferences</h3>
           <p>Utilizing evidence-based approaches tailored to your specific needs and goals. Find the right fit for you.</p>
@@ -93,9 +108,13 @@ export default function ServicesOverview() {
         <ServiceCard>
           <Image 
             src="/specialty.jpg"
-            alt="Support and empathy" 
-            width={300} height={200} 
-            style={{ width: '100%', height: 'auto', borderRadius: '5px', marginBottom: '1rem' }}
+            alt="Supportive therapy environment with professional counselor" 
+            width={600}
+            height={400}
+            quality={75}
+            loading="lazy"
+            style={imageStyle}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <h3>Specialty Areas</h3>
           <p>Expertise in addressing anxiety, depression, relationship issues, stress management, and more.</p>

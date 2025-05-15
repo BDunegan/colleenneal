@@ -10,6 +10,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
 import Link from 'next/link';
+import Image from 'next/image';
 import Quote from '../common/Quote';
 
 const HeroContainer = styled.section`
@@ -24,33 +25,30 @@ const HeroContainer = styled.section`
   justify-content: center;
   text-align: center;
   overflow: hidden;
+`;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('/hero.jpg') center/cover no-repeat;
-    z-index: 1;
-  }
+const HeroImage = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+`;
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgba(0, 0, 0, 0.3) 100%
-    );
-    z-index: 2;
-  }
+const HeroOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 2;
 `;
 
 const HeroContent = styled.div`
@@ -111,9 +109,23 @@ const StyledQuote = styled(Quote)`
 export default function HeroSection() {
   return (
     <HeroContainer>
+      <HeroImage>
+        <Image
+          src="/hero.jpg"
+          alt="Professional counseling office"
+          fill
+          priority
+          quality={90}
+          style={{ objectFit: 'cover' }}
+        />
+      </HeroImage>
+      <HeroOverlay />
       <HeroContent>
         <h1>Exceptional Counseling and Therapy Services</h1>
-        <StyledQuote />
+        <StyledQuote 
+          text="The best and most beautiful things in the world cannot be seen or even touched – they must be felt with the heart"
+          author="Helen Keller"
+        />
         <Link href="/contact" className="cta-button">
           Request an Appointment
         </Link>

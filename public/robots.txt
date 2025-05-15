@@ -1,6 +1,7 @@
-# Allow all crawlers
+# Global rules
 User-agent: *
 Allow: /
+Crawl-delay: 10
 
 # Sitemap location
 Sitemap: https://www.colleenneal.com/sitemap.xml
@@ -9,6 +10,25 @@ Sitemap: https://www.colleenneal.com/sitemap.xml
 Disallow: /admin/
 Disallow: /private/
 Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
 
-# Crawl-delay for all bots
-Crawl-delay: 10 
+# Specific rules for major bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 5
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 5
+
+# Block archive.org
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: / 

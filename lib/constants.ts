@@ -66,6 +66,8 @@ export interface ImageProps {
   height: number;
   priority?: boolean;
   className?: string;
+  quality?: number;
+  sizes?: string;
 }
 
 export interface ContactInfo {
