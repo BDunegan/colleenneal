@@ -18,6 +18,7 @@ import MainContainer from './components/MainContainer';
 // Providers
 import StyledComponentsRegistry from '@/lib/registry';
 import ThemeProviderWrapper from './components/ThemeProviderWrapper';
+import ImagePreloader from './components/common/ImagePreloader';
 
 // SEO Configuration
 import { defaultMetadata, viewport } from './metadata';
@@ -49,6 +50,8 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           {/* Theme Provider: Makes theme available to all styled-components */}
           <ThemeProviderWrapper>
+            {/* Image Preloader: Preloads critical images */}
+            <ImagePreloader />
             {/* Main Container: Ensures footer sticks to bottom */}
             <MainContainer>
               <Header />

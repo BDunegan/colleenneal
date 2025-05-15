@@ -10,7 +10,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '@/lib/theme';
 import Link from 'next/link';
-import Image from 'next/image';
+import OptimizedImage from '../common/OptimizedImage';
 import Quote from '../common/Quote';
 
 const HeroContainer = styled.section`
@@ -110,13 +110,17 @@ export default function HeroSection() {
   return (
     <HeroContainer>
       <HeroImage>
-        <Image
+        <OptimizedImage
           src="/hero.jpg"
           alt="Professional counseling office"
           fill
-          priority
-          quality={90}
-          style={{ objectFit: 'cover' }}
+          priority={true}
+          quality={85}
+          sizes="100vw"
+          style={{ 
+            objectFit: 'cover',
+            objectPosition: 'center'
+          }}
         />
       </HeroImage>
       <HeroOverlay />

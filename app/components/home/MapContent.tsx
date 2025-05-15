@@ -18,7 +18,7 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const position: [number, number] = [29.5635, -95.1234]; // Houston, TX coordinates
+const position: [number, number] = [29.558098, -95.115155]; // Updated coordinates
 
 export default function MapContent() {
     return (
@@ -27,10 +27,17 @@ export default function MapContent() {
             zoom={15} 
             scrollWheelZoom={false} 
             style={{ height: '100%', width: '100%' }}
+            minZoom={10}
+            maxZoom={18}
+            preferCanvas={true}
         >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                maxZoom={18}
+                keepBuffer={2}
+                updateWhenIdle={true}
+                updateWhenZooming={false}
             />
             <Marker position={position}>
                 <Popup>
