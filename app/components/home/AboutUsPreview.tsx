@@ -59,22 +59,6 @@ export default function AboutUsPreview() {
         With over 15 years of experience, Colleen offers compassionate and effective counseling tailored to your unique journey.
         Learn more about her background, approach, and commitment to supporting your mental health.
       </PreviewText>
-      <AboutImage>
-        <OptimizedImage 
-          src="/specialty.jpg"
-          alt="Professional counselor in a supportive therapy environment"
-          width={400}
-          height={300}
-          quality={75}
-          style={{ 
-            width: '100%', 
-            height: 'auto', 
-            objectFit: 'cover', 
-            borderRadius: '8px' 
-          }}
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 40vw"
-        />
-      </AboutImage>
       <AboutLink href="/about-us">Learn More About Colleen</AboutLink>
     </AboutPreviewContainer>
   );
