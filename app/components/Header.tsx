@@ -99,6 +99,8 @@ const MobileNavToggle = styled.button`
   cursor: pointer;
   padding: 0.5rem;
   color: ${theme.colors.primary};
+  position: relative;
+  z-index: 1001;
 
   @media (min-width: 768px) {
     display: none;
@@ -108,28 +110,64 @@ const MobileNavToggle = styled.button`
 const MobileMenu = styled.nav<{ $isOpen: boolean }>`
   display: ${props => props.$isOpen ? 'flex' : 'none'};
   flex-direction: column;
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   background-color: ${theme.colors.background};
-  border-bottom: 1px solid #eee;
-  padding: 1rem;
+  padding: 5rem 1rem 1rem 1rem;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  animation: ${props => props.$isOpen ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
 
   a {
     color: ${theme.colors.text};
-    padding: 0.8rem 1rem;
+    padding: 1rem;
     text-decoration: none;
     display: block;
     text-align: center;
     font-weight: 500;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
 
     &:hover {
       background-color: #f9f9f9;
       color: ${theme.colors.primary};
       text-decoration: none;
+      transform: translateX(5px);
+    }
+
+    &:last-child {
+      margin-top: 1rem;
+      background-color: ${theme.colors.primary};
+      color: white;
+      border-radius: 5px;
+      border: none;
+
+      &:hover {
+        background-color: #005fa3;
+        transform: translateY(-2px);
+      }
     }
   }
 
@@ -169,10 +207,13 @@ export default function Header() {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : 'unset';
   };
 
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
+    document.body.style.overflow = 'unset';
   };
 
   const logoImageProps: ImageProps = {
@@ -219,10 +260,9 @@ export default function Header() {
               ))}
               <a 
                 href={`tel:${SITE_CONSTANTS.CONTACT.PHONE}`} 
-                onClick={handleLinkClick} 
-                style={{ marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}
+                onClick={handleLinkClick}
               >
-                {SITE_CONSTANTS.CONTACT.PHONE}
+                Call Now: {SITE_CONSTANTS.CONTACT.PHONE}
               </a>
             </MobileMenu>
           </>

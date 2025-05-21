@@ -13,14 +13,12 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 const MapWrapper = styled.div`
-  height: 400px;
+  height: 100%;
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
   background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
 `;
 
 // Dynamically import the map components

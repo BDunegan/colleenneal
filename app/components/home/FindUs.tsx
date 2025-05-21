@@ -35,9 +35,8 @@ const FindUsContainer = styled.section`
 const MapContainer = styled.div`
   border-radius: 8px;
   overflow: hidden;
-  min-height: 350px;
+  height: 400px;
   width: 100%;
-  aspect-ratio: 16 / 9;
   background-color: #e9e9e9;
 `;
 
@@ -83,7 +82,7 @@ const LocationDetails = styled.div`
 
 export default function FindUs() {
   // Updated static address and coordinates for the map marker
-  const address = "16864 Royal Crest Dr, Houston, TX 77058";
+  const address = "16864 Royal Crest Dr, Houston, TX 77058";
   const position: L.LatLngExpression = [29.558098, -95.115155]; // Geocoded coords for this address :contentReference[oaicite:1]{index=1}
 
   // Generate Google Maps search URL
