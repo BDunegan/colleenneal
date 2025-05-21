@@ -22,6 +22,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   position: relative;
   width: 100%;
+  z-index: 1100;
 
   @media (min-width: 768px) {
     padding: 1rem 2rem;
@@ -31,21 +32,27 @@ const HeaderContainer = styled.header`
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  min-width: 0;
 
   a {
     text-decoration: none;
     display: flex;
     align-items: center;
+    min-width: 0;
   }
 
   .logo-image {
     height: ${SITE_CONSTANTS.IMAGES.LOGO.MOBILE_HEIGHT}px;
     width: auto;
+    max-width: 160px;
+    min-width: 0;
+    object-fit: contain;
   }
 
   @media (min-width: 768px) {
     .logo-image {
       height: ${SITE_CONSTANTS.IMAGES.LOGO.HEIGHT}px;
+      max-width: none;
     }
   }
 `;
@@ -95,12 +102,13 @@ const MobileNavToggle = styled.button`
   display: block;
   background: none;
   border: none;
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
   color: ${theme.colors.primary};
   position: relative;
   z-index: 1001;
+  margin-left: 8px;
 
   @media (min-width: 768px) {
     display: none;
